@@ -8,13 +8,23 @@ import factory.ConcreteCreatorCsv;
 import factory.ConcreteCreatorTxt;
 import factory.Creator;
 import factory.Product;
+import ownUtil.Observable;
 
 
-public class Model {
+public class Model implements Observable{
 	
 	public Haushaltroboter haushaltroboter;
+	private static Model haushaltsroboterModel;
 	
+	public static Model getInstance() {
+		if(haushaltsroboterModel == null) {
+			haushaltsroboterModel = new Model();
+		}
+		return haushaltsroboterModel;
+	}
+	private Model() {
 		
+	}
 	public Haushaltroboter getHaushaltroboter() {
 		return haushaltroboter;
 	}
@@ -61,5 +71,9 @@ public class Model {
 	            zeile[4].split("_"))); 
 	        reader.schlieesenDatei();
 		}
+
+	@Override
+	<>
+	}
 	
 }

@@ -1,19 +1,27 @@
-package gui;
+package guiHaushaltsrobotern;
 
 import java.io.IOException;
+import java.util.Vector;
+
 import business.Model;
+import javafx.beans.Observable;
 import javafx.stage.Stage;
+import ownUtil.Observer;
 
 
-public class Control {
+public class Control implements Observer{
 	
 	private Model m;
 	private View v;
 	
 	public Control (Stage st) throws Exception{
-		this.m = new Model();
+		this.m = Model.getInstance();
 		this.v = new View(st, this, m);
+		this.m.addObserver(this);
 	}
+	
+
+	Vector<Observer> observer = new Vector<Observer>();
 	
 	public void schreibeHaushaltroboterInDatei(String typ) {
 		try {
@@ -53,6 +61,23 @@ public class Control {
             exc.printStackTrace();
         }
     }
+
+	@Override
+	public void addObserver(Observer obs) {
+		this.observer.addElement(obs);
+	}
+
+	@Override
+	public void removeObserver(Observer obs) {
+		this.observer.removeElement(obs);
+	}
+
+	@Override
+	public void notifyObserver() {
+		for(Observer ob : observer) {
+			this.observer.notify();
+		}
+	}
 }
 
 

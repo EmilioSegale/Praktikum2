@@ -1,4 +1,4 @@
-package gui;
+package guiHaushaltsrobotern;
 
 import business.Haushaltroboter;
 import business.Model;
