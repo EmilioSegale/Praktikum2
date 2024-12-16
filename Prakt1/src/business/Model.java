@@ -3,17 +3,20 @@ package business;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import factory.ConcreteCreatorCsv;
 import factory.ConcreteCreatorTxt;
 import factory.Creator;
 import factory.Product;
 import ownUtil.Observable;
+import ownUtil.Observer;
 
 
 public class Model implements Observable{
 	
-	public Haushaltroboter haushaltroboter;
+	private Haushaltroboter haushaltroboter;
+	
 	private static Model haushaltsroboterModel;
 	
 	public static Model getInstance() {
@@ -22,9 +25,13 @@ public class Model implements Observable{
 		}
 		return haushaltsroboterModel;
 	}
+	
+	private Vector<Observer> observers = new Vector<Observer>();
+
 	private Model() {
-		
+
 	}
+	
 	public Haushaltroboter getHaushaltroboter() {
 		return haushaltroboter;
 	}
@@ -55,6 +62,9 @@ public class Model implements Observable{
             zeile[3], 
             zeile[4].split("_"))); 
         reader.schlieesenDatei();
+        
+        notifyObserver();
+
 	}
 	
 	public void leseHaushaltroboterAusTxtDatei() throws IOException {
@@ -70,10 +80,24 @@ public class Model implements Observable{
 	            zeile[3], 
 	            zeile[4].split("_"))); 
 	        reader.schlieesenDatei();
-		}
+	        
+	        notifyObserver();
 
-	@Override
-	<>
 	}
-	
+	@Override
+	public void addObserver(Observer obs) {
+		observers.addElement(obs);
+	}
+	@Override
+	public void removeObserver(Observer obs) {
+		observers.removeElement(obs);
+	}
+	@Override
+	public void notifyObserver() {
+		
+		for(Observer obs: observers) {
+			obs.update();
+		}
+		
+	}
 }

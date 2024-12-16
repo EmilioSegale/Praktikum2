@@ -19,10 +19,7 @@ public class Control implements Observer{
 		this.v = new View(st, this, m);
 		this.m.addObserver(this);
 	}
-	
 
-	Vector<Observer> observer = new Vector<Observer>();
-	
 	public void schreibeHaushaltroboterInDatei(String typ) {
 		try {
 			if("csv".equals(typ)) {
@@ -63,20 +60,8 @@ public class Control implements Observer{
     }
 
 	@Override
-	public void addObserver(Observer obs) {
-		this.observer.addElement(obs);
-	}
-
-	@Override
-	public void removeObserver(Observer obs) {
-		this.observer.removeElement(obs);
-	}
-
-	@Override
-	public void notifyObserver() {
-		for(Observer ob : observer) {
-			this.observer.notify();
-		}
+	public void update() {
+		this.v.zeigeHaushaltroboterAn();
 	}
 }
 

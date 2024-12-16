@@ -28,11 +28,12 @@ public class StaedtischeEinrichtungenView {
     		primaryStage.setScene(scene);
     		primaryStage.setTitle("Anzeige von Robotern");
     		primaryStage.show();
-    		this.roboteruebersichtControl 
- 			= roboteruebersichtControl;
- 		this.haushaltsroboterModel = haushaltsroboterModel;
- 		this.initKomponenten();
-		this.initListener();
+    		this.roboteruebersichtControl = roboteruebersichtControl;
+	 		this.haushaltsroboterModel = haushaltsroboterModel;
+	 		
+	 		
+	 		this.initKomponenten();
+			this.initListener();
     	}
 
  	private void initKomponenten(){
@@ -67,7 +68,7 @@ public class StaedtischeEinrichtungenView {
    	    });
     }
    
-    private void zeigeHaushaltsroboterAn(){
+    public void zeigeHaushaltsroboterAn(){
     		if(haushaltsroboterModel.getHaushaltroboter() != null){
     			txtAnzeigeHaushaltsroboter.setText(
     				haushaltsroboterModel.getHaushaltroboter().gibHausroboternZurueck(' '));

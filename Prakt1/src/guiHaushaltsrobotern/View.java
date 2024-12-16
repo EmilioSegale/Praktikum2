@@ -13,7 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import ownUtil.*;
 
-public class View {
+public class View{
 	
 	public Control c;
 	public Model m;
@@ -136,7 +136,7 @@ public class View {
 	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
 	    	@Override
 	        public void handle(ActionEvent e) {
-	            zeigeHaushaltroboterAn();
+	            zeigeHaushaltroboterAn();;
 	        } 
    	    });
 	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
@@ -162,28 +162,28 @@ public class View {
    
 	private void nehmeHaushaltsroboterAuf(){
     	try{
-    		this.m.haushaltroboter = new Haushaltroboter(
-    			Integer.parseInt(txtSeriennummer.getText()), 
-   	            Float.parseFloat(txtPreis.getText()),
-   	            txtModell.getText(),
-    		    txtSensortyp.getText(),
-    		    txtFarbe.getText().split(";"));
+    		this.m.setHaushaltroboter(new Haushaltroboter(
+        			Integer.parseInt(txtSeriennummer.getText()), 
+       	            Float.parseFloat(txtPreis.getText()),
+       	            txtModell.getText(),
+        		    txtSensortyp.getText(),
+        		    txtFarbe.getText().split(";")));
     		zeigeInformationsfensterAn("Das Haushaltsroboter wurde aufgenommen!");
        	}
        	catch(Exception e){
        		zeigeFehlermeldungsfensterAn(e.getMessage());
      	}
     }
-   
-    private void zeigeHaushaltroboterAn(){
-    	if(this.m.haushaltroboter != null){
-    		txtAnzeige.setText(
-    			this.m.haushaltroboter.gibHausroboternZurueck('-'));
-    	}
-    	else{
-    		zeigeInformationsfensterAn("Bisher wurde kein Haushaltsroboter aufgenommen!");
-    	}
-    }
+	
+	  public void zeigeHaushaltroboterAn(){
+		  if(this.m.getHaushaltroboter() != null){
+	  		txtAnzeige.setText(
+	  			this.m.getHaushaltroboter().gibHausroboternZurueck('-'));
+	  	}
+	  	else{
+	  		zeigeInformationsfensterAn("Bisher wurde kein Haushaltsroboter aufgenommen!");
+	  	}
+	  }
     
 	private void schreibeHaushaltroboterInDatei(String typ) {
 		this.c.schreibeHaushaltroboterInDatei(typ);
