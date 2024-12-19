@@ -1,12 +1,17 @@
 package business;
 
+import java.util.ArrayList;
+
+import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
+
 public class Haushaltroboter {
 	
     private int seriennummer;
     private float preis;
     private String modell;
     private String sensortyp;
-    private String[] farbe;
+    private ArrayList<String> farbe;
+    
 
     public Haushaltroboter(int seriennummer, float preis, String modell,
     	String sensortyp, String[] farbe){
@@ -14,9 +19,15 @@ public class Haushaltroboter {
   	    this.preis = preis;
    	    this.modell = modell;
    	    this.sensortyp = sensortyp;
-   	    this.farbe = farbe;
+   	    this.setFarbeAusStringArray(farbe);;
     }
     
+    public void setFarbeAusStringArray(String [] farbe) {
+    	this.farbe = new ArrayList<String>();
+    	for(int i = 0; i < farbe.length; i++) {
+    		this.farbe.add(i, farbe[i]);
+    	}
+    }
     //Getter and Setter
 
 	public int getSeriennummer() {
@@ -59,23 +70,18 @@ public class Haushaltroboter {
 	}
 
 
-	public String[] getFarbe() {
+	public ArrayList<String> getFarbe() {
 		return farbe;
-	}
-
-
-	public void setFarbe(String[] farbe) {
-		this.farbe = farbe;
 	}
 	
 	//GetColor
 	public String getColor(char trenner) {
 		String ergebnis = "";
 		int i = 0;
-		for(i = 0; i < this.getFarbe().length - 1; i++) {
-			ergebnis = ergebnis + this.getFarbe()[i] + trenner; 
+		for(i = 0; i < this.getFarbe().size() - 1; i++) {
+			ergebnis = ergebnis + this.getFarbe().get(i) + trenner; 
 		}
-		return ergebnis	+ this.getFarbe()[i];
+		return ergebnis	+ this.getFarbe().get(i);
 	}
 	
 	//GetHaushaltroboter

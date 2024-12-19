@@ -3,6 +3,7 @@ package business;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import factory.ConcreteCreatorCsv;
@@ -15,7 +16,7 @@ import ownUtil.Observer;
 
 public class Model implements Observable{
 	
-	private Haushaltroboter haushaltroboter;
+	private ArrayList<Haushaltroboter> haushaltroboter = new ArrayList<Haushaltroboter>();
 	
 	private static Model haushaltsroboterModel;
 	
@@ -27,16 +28,19 @@ public class Model implements Observable{
 	}
 	
 	private Vector<Observer> observers = new Vector<Observer>();
-
+		
 	private Model() {
 
 	}
 	
-	public Haushaltroboter getHaushaltroboter() {
-		return haushaltroboter;
+	public ArrayList<Haushaltroboter> getHaushaltroboter() {
+		return this.haushaltroboter;
 	}
-	public void setHaushaltroboter(Haushaltroboter haushaltroboter) {
-	    this.haushaltroboter = haushaltroboter;
+//	public void setHaushaltroboter(Haushaltroboter haushaltroboter) {
+//	    this.haushaltroboter = haushaltroboter;
+//	}
+	public void addHaushaltsroboter(Haushaltroboter haushaltroboter){
+		this.haushaltroboter.add(haushaltroboter);
 	}
 	
 	
@@ -45,7 +49,10 @@ public class Model implements Observable{
 	        throw new IllegalStateException("Haushaltroboter can not be Ini.");
 	    }
 			BufferedWriter aus = new BufferedWriter(new FileWriter("Haushaltsroboter.csv", true));
-			aus.write(this.getHaushaltroboter().gibHausroboternZurueck(';'));
+			
+			for(Haushaltroboter haushaltrobot : this.getHaushaltroboter()) {
+				aus.write(haushaltrobot.gibHausroboternZurueck(';'));
+			}
 			aus.close();
 
 	}
@@ -56,10 +63,10 @@ public class Model implements Observable{
 		
         String[] zeile = reader.leserAusDatei();
         
-        this.setHaushaltroboter(new Haushaltroboter(Integer.parseInt(zeile[0]), 
+        this.addHaushaltsroboter(new Haushaltroboter(Integer.parseInt(zeile[0]), 
             Float.parseFloat(zeile[1]), 
             zeile[2], 
-            zeile[3], 
+            zeile[3],
             zeile[4].split("_"))); 
         reader.schlieesenDatei();
         
@@ -74,7 +81,7 @@ public class Model implements Observable{
 			
 	        String[] zeile = reader.leserAusDatei();
 	        
-	        this.setHaushaltroboter(new Haushaltroboter(Integer.parseInt(zeile[0]), 
+	        this.addHaushaltsroboter(new Haushaltroboter(Integer.parseInt(zeile[0]), 
 	            Float.parseFloat(zeile[1]), 
 	            zeile[2], 
 	            zeile[3], 

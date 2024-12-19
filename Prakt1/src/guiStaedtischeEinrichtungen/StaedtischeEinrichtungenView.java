@@ -1,4 +1,5 @@
 package guiStaedtischeEinrichtungen;
+import business.Haushaltroboter;
 import business.Model;
 import javafx.event.*;
 import javafx.scene.Scene;
@@ -57,22 +58,21 @@ public class StaedtischeEinrichtungenView {
         	btnAnzeigeHaushaltsroboter.setLayoutY(290);
         	pane.getChildren().add(btnAnzeigeHaushaltsroboter); 
    }
-   
+   //Lambda-Ausdruck
    private void initListener() {
 	    btnAnzeigeHaushaltsroboter.setOnAction(
- 			new EventHandler<ActionEvent>() {
-	    		@Override
-	        	public void handle(ActionEvent e) {
-	            	zeigeHaushaltsroboterAn();
-	        	} 
-   	    });
+	            	e-> zeigeHaushaltsroboterAn() 
+   	    );
     }
    
     public void zeigeHaushaltsroboterAn(){
-    		if(haushaltsroboterModel.getHaushaltroboter() != null){
-    			txtAnzeigeHaushaltsroboter.setText(
-    				haushaltsroboterModel.getHaushaltroboter().gibHausroboternZurueck(' '));
-    		}
+    	 if(haushaltsroboterModel.getHaushaltroboter().size() > 0){
+			 StringBuffer text = new StringBuffer();
+	  		for(Haushaltroboter roboter : haushaltsroboterModel.getHaushaltroboter()) {
+	  			text.append(roboter.gibHausroboternZurueck(';'));
+	  		}
+	  		this.txtAnzeigeHaushaltsroboter.setText(text.toString());
+ 		 }
     		else{
     			zeigeInformationsfensterAn(
  				"Bisher wurde kein Haushaltsroboter" 

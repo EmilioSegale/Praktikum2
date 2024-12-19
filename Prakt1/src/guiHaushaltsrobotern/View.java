@@ -1,5 +1,7 @@
 package guiHaushaltsrobotern;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 import business.Haushaltroboter;
 import business.Model;
 import javafx.event.ActionEvent;
@@ -139,19 +141,17 @@ public class View{
 	            zeigeHaushaltroboterAn();;
 	        } 
    	    });
-	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent e) {
-		    	leseHaushaltsroboterAusDatei("txt");
-		    }
-    	});
+	    mnItmTxtImport.setOnAction(
+	    		   //Lambda-Ausdruck
+	    		e ->	leseHaushaltsroboterAusDatei("txt")
+		 
+    	);
 	    
-	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent e) {
-		    	leseHaushaltsroboterAusDatei("csv");
-		    }
-    	});
+	    mnItmCsvImport.setOnAction(
+	    		   //Lambda-Ausdruck
+		    	e -> leseHaushaltsroboterAusDatei("csv")
+		    
+    	);
 	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -162,7 +162,7 @@ public class View{
    
 	private void nehmeHaushaltsroboterAuf(){
     	try{
-    		this.m.setHaushaltroboter(new Haushaltroboter(
+    		this.m.addHaushaltsroboter(new Haushaltroboter(
         			Integer.parseInt(txtSeriennummer.getText()), 
        	            Float.parseFloat(txtPreis.getText()),
        	            txtModell.getText(),
@@ -176,10 +176,14 @@ public class View{
     }
 	
 	  public void zeigeHaushaltroboterAn(){
-		  if(this.m.getHaushaltroboter() != null){
-	  		txtAnzeige.setText(
-	  			this.m.getHaushaltroboter().gibHausroboternZurueck('-'));
-	  	}
+		 if(m.getHaushaltroboter().size() > 0){
+			 StringBuffer text = new StringBuffer();
+	  		for(Haushaltroboter roboter : m.getHaushaltroboter()) {
+	  			text.append(roboter.gibHausroboternZurueck(';'));
+	  		}
+	  		this.txtAnzeige.setText(text.toString());
+ 		 }
+		
 	  	else{
 	  		zeigeInformationsfensterAn("Bisher wurde kein Haushaltsroboter aufgenommen!");
 	  	}
